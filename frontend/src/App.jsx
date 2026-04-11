@@ -111,9 +111,12 @@ function App() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <h2>Voice Capture</h2>
-          <p style={{ color: '#64748b', marginBottom: '2rem' }}>
-            Record the baby's cry live or upload a recorded sample.
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+            <Activity color="#2563eb" size={24} />
+            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>AI Diagnostic</h2>
+          </div>
+          <p style={{ color: '#64748b', marginBottom: '2rem', fontSize: '1rem' }}>
+            Capture a live cry sample for immediate interpretation using our validated neural models.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -123,52 +126,58 @@ function App() {
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
-                gap: '1rem',
-                padding: '2rem',
-                background: 'rgba(255,255,255,0.03)',
-                borderRadius: '1.5rem',
-                border: isRecording ? '2px solid #ef4444' : '2px solid transparent',
-                transition: 'all 0.3s ease'
+                gap: '1.25rem',
+                padding: '2.5rem',
+                background: isRecording ? '#fff1f2' : '#f8fafc',
+                borderRadius: '1.25rem',
+                border: isRecording ? '2px solid #fda4af' : '2px solid #e2e8f0',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
               <motion.button
                 className="btn"
                 style={{ 
-                  width: '80px', 
-                  height: '80px', 
-                  borderRadius: '50%',
-                  background: isRecording ? '#ef4444' : 'linear-gradient(to right, #3b82f6, #8b5cf6)',
-                  padding: 0
+                  width: '72px', 
+                  height: '72px', 
+                  borderRadius: '100%',
+                  background: isRecording ? '#e11d48' : '#0f172a',
+                  padding: 0,
+                  boxShadow: isRecording ? '0 0 20px rgba(225, 29, 72, 0.3)' : 'none'
                 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={isRecording ? stopRecording : startRecording}
               >
-                {isRecording ? <Square fill="white" size={32} /> : <Mic size={32} />}
+                {isRecording ? <Square fill="#fff" size={24} /> : <Mic size={28} />}
               </motion.button>
               
               <div style={{ textAlign: 'center' }}>
-                <p style={{ fontWeight: 600, fontSize: '1.1rem', margin: 0 }}>
-                  {isRecording ? "Recording..." : "Capture Live Cry"}
+                <p style={{ fontWeight: 700, fontSize: '1rem', color: isRecording ? '#e11d48' : '#0f172a', margin: 0 }}>
+                  {isRecording ? "Sensing Audio..." : "Start Live Session"}
                 </p>
                 {isRecording && (
                    <motion.div 
-                    animate={{ opacity: [1, 0.4, 1] }} 
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                    style={{ color: '#ef4444', fontSize: '0.875rem', fontWeight: 700, marginTop: '0.25rem' }}
+                    animate={{ opacity: [1, 0.3, 1] }} 
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    style={{ color: '#e11d48', fontSize: '0.75rem', fontWeight: 800, marginTop: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}
                    >
-                     🔴 LIVE SENSING
+                     • Processing Stream
                    </motion.div>
                 )}
               </div>
             </div>
 
-            <div style={{ textAlign: 'center', color: '#64748b', fontSize: '0.875rem' }}>— OR —</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: '#94a3b8' }}>
+               <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+               <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase' }}>or analyze file</span>
+               <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+            </div>
 
             {/* Upload Area */}
             <div 
               className="upload-area"
               onClick={() => fileInputRef.current.click()}
-              style={{ padding: '1.5rem' }}
+              style={{ padding: '1.25rem' }}
             >
               <input 
                 type="file" 
@@ -178,14 +187,14 @@ function App() {
                 accept=".wav,.mp3,.m4a"
               />
               {file && !isRecording ? (
-                <div>
-                  <CheckCircle size={24} color="#22c55e" style={{ margin: '0 auto 0.5rem' }} />
-                  <p style={{ fontWeight: 600, color: '#e2e8f0', margin: 0 }}>{file.name}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                  <CheckCircle size={18} color="#059669" />
+                  <p style={{ fontWeight: 600, color: '#0f172a', margin: 0, fontSize: '0.875rem' }}>{file.name}</p>
                 </div>
               ) : (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                   <Upload size={20} color="#60a5fa" />
-                   <span>Upload File</span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                   <Upload size={18} />
+                   <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Import Audio Data</span>
                 </div>
               )}
             </div>
@@ -193,13 +202,14 @@ function App() {
 
           <button 
             className="btn" 
-            style={{ marginTop: '2rem' }}
+            style={{ marginTop: '2.5rem', background: '#2563eb', padding: '1rem' }}
             disabled={!file || loading || isRecording}
             onClick={handleUpload}
           >
             {loading ? <Loader2 className="loading-spinner" /> : <Activity size={20} />}
-            {loading ? 'Analyzing...' : 'Analyze Cry Patterns'}
+            {loading ? 'Interpreting...' : 'Run Neural Analysis'}
           </button>
+
 
           {error && (
             <motion.div 

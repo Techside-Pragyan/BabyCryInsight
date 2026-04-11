@@ -111,73 +111,71 @@ function App() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-            <Activity color="#2563eb" size={24} />
-            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>AI Diagnostic</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+            <span style={{ fontSize: '2rem' }}>👶</span>
+            <h2 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 800, color: '#f43f5e' }}>Cry Translator</h2>
           </div>
-          <p style={{ color: '#64748b', marginBottom: '2rem', fontSize: '1rem' }}>
-            Capture a live cry sample for immediate interpretation using our validated neural models.
+          <p style={{ color: '#947b7b', marginBottom: '2.5rem', fontSize: '1.1rem', fontWeight: 500 }}>
+            Hear what your little one is trying to say! Record a cry and let AYA translate it for you. 🍼
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Recording Interface */}
             <div 
               style={{ 
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
-                gap: '1.25rem',
-                padding: '2.5rem',
-                background: isRecording ? '#fff1f2' : '#f8fafc',
-                borderRadius: '1.25rem',
-                border: isRecording ? '2px solid #fda4af' : '2px solid #e2e8f0',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                gap: '1.5rem',
+                padding: '3rem',
+                background: isRecording ? '#fff1f2' : '#fffaf5',
+                borderRadius: '2.5rem',
+                border: isRecording ? '4px solid #fecdd3' : '4px solid transparent',
+                transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
               }}
             >
               <motion.button
                 className="btn"
                 style={{ 
-                  width: '72px', 
-                  height: '72px', 
-                  borderRadius: '100%',
-                  background: isRecording ? '#e11d48' : '#0f172a',
-                  padding: 0,
-                  boxShadow: isRecording ? '0 0 20px rgba(225, 29, 72, 0.3)' : 'none'
+                  width: '90px', 
+                  height: '90px', 
+                  borderRadius: '50%',
+                  background: isRecording ? '#e11d48' : '#f43f5e',
+                  padding: 0
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={isRecording ? stopRecording : startRecording}
               >
-                {isRecording ? <Square fill="#fff" size={24} /> : <Mic size={28} />}
+                {isRecording ? <Square fill="#fff" size={32} /> : <Mic size={40} />}
               </motion.button>
               
               <div style={{ textAlign: 'center' }}>
-                <p style={{ fontWeight: 700, fontSize: '1rem', color: isRecording ? '#e11d48' : '#0f172a', margin: 0 }}>
-                  {isRecording ? "Sensing Audio..." : "Start Live Session"}
+                <p style={{ fontWeight: 800, fontSize: '1.25rem', color: isRecording ? '#e11d48' : '#f43f5e', margin: 0 }}>
+                  {isRecording ? "Listening..." : "Start Listening"}
                 </p>
                 {isRecording && (
                    <motion.div 
-                    animate={{ opacity: [1, 0.3, 1] }} 
-                    transition={{ repeat: Infinity, duration: 2 }}
-                    style={{ color: '#e11d48', fontSize: '0.75rem', fontWeight: 800, marginTop: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}
+                    animate={{ scale: [1, 1.1, 1] }} 
+                    transition={{ repeat: Infinity, duration: 1 }}
+                    style={{ color: '#fb7185', fontSize: '1.5rem', marginTop: '0.5rem' }}
                    >
-                     • Processing Stream
+                     🎶✨
                    </motion.div>
                 )}
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: '#94a3b8' }}>
-               <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-               <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase' }}>or analyze file</span>
-               <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', color: '#fecdd3' }}>
+               <div style={{ flex: 1, height: '2px', background: '#ffe4e6' }}></div>
+               <span style={{ fontSize: '0.875rem', fontWeight: 800, color: '#fb7185' }}>OR UPLOAD</span>
+               <div style={{ flex: 1, height: '2px', background: '#ffe4e6' }}></div>
             </div>
 
             {/* Upload Area */}
             <div 
               className="upload-area"
               onClick={() => fileInputRef.current.click()}
-              style={{ padding: '1.25rem' }}
             >
               <input 
                 type="file" 
@@ -187,14 +185,14 @@ function App() {
                 accept=".wav,.mp3,.m4a"
               />
               {file && !isRecording ? (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                  <CheckCircle size={18} color="#059669" />
-                  <p style={{ fontWeight: 600, color: '#0f172a', margin: 0, fontSize: '0.875rem' }}>{file.name}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                  <CheckCircle size={24} color="#f43f5e" />
+                  <p style={{ fontWeight: 800, color: '#f43f5e', margin: 0 }}>{file.name}</p>
                 </div>
               ) : (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
-                   <Upload size={18} />
-                   <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Import Audio Data</span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                   <Upload size={24} />
+                   <span style={{ fontWeight: 800 }}>Pick a Record</span>
                 </div>
               )}
             </div>
@@ -202,13 +200,14 @@ function App() {
 
           <button 
             className="btn" 
-            style={{ marginTop: '2.5rem', background: '#2563eb', padding: '1rem' }}
+            style={{ marginTop: '3rem', width: '100%' }}
             disabled={!file || loading || isRecording}
             onClick={handleUpload}
           >
-            {loading ? <Loader2 className="loading-spinner" /> : <Activity size={20} />}
-            {loading ? 'Interpreting...' : 'Run Neural Analysis'}
+            {loading ? <Loader2 className="loading-spinner" /> : <span style={{ fontSize: '1.5rem' }}>✨</span>}
+            {loading ? 'Translating...' : 'Translate Cry'}
           </button>
+
 
 
           {error && (
